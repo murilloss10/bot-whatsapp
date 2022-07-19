@@ -10,6 +10,7 @@
 namespace App\Services;
 
 use App\Repositories\SaveMessageRepository;
+use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 
 class MensagemService
@@ -38,7 +39,7 @@ class MensagemService
             'message'               => $data['message'],
             'ruleId'                => $data['ruleId'],
             'isTestMessage'         => $data['isTestMessage'],
-            'for_user_id'           => 1,//alterar para o id do usuário logado
+            'for_user_id'           => Auth::check() ? Auth::id() : 0
         ));
 
         return $message;

@@ -9,46 +9,46 @@ use Google\Cloud\Dialogflow\V2\IntentsClient;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    //posso adicionar uma página para fazer upload do arquivo .json, ler ele e salvar as informações no banco de dados
-//    $test = [
-//        'credentials' => json_decode(file_get_contents('../teste-jwyo-aed37d258822.json'), true)
+//Route::get('/', function () {
+//    //posso adicionar uma página para fazer upload do arquivo .json, ler ele e salvar as informações no banco de dados
+////    $test = [
+////        'credentials' => json_decode(file_get_contents('../teste-jwyo-aed37d258822.json'), true)
+////    ];
+////    return $test['credentials'];
+//    //teste
+//    $config = [
+//        'keyFilePath' => '../teste-jwyo-aed37d258822.json',
+//        'projectId' => 'teste-jwyo',
 //    ];
-//    return $test['credentials'];
-    //teste
-    $config = [
-        'keyFilePath' => '../teste-jwyo-aed37d258822.json',
-        'projectId' => 'teste-jwyo',
-    ];
-    //teste 2
-    $test = array('credentials' => '../teste-jwyo-aed37d258822.json');
-    //nova sessão
-    $sessionsClient = new \Google\Cloud\Dialogflow\V2\SessionsClient($test);
-    $session = $sessionsClient->sessionName($config['projectId'], '12345678');
-    //criando texto input
-    $textInput = new \Google\Cloud\Dialogflow\V2\TextInput();
-    $textInput->setText('oi');
-    $textInput->setLanguageCode('pt-BR');
-    //criando query input
-    $queryInput = new \Google\Cloud\Dialogflow\V2\QueryInput();
-    $queryInput->setText($textInput);
-    // get response and relevant info
-    $response = $sessionsClient->detectIntent($session, $queryInput);
-    $queryResult = $response->getQueryResult();
-    $queryText = $queryResult->getQueryText();
-    $intent = $queryResult->getIntent();
-    $displayName = $intent->getDisplayName();
-    $confidence = $queryResult->getIntentDetectionConfidence();
-    $fulfilmentText = $queryResult->getFulfillmentText();
-     // output relevant info
-    print(str_repeat("=", 20) . PHP_EOL);
-    printf('Query text: %s' . PHP_EOL, $queryText);
-    printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName, $confidence);
-    print(PHP_EOL);
-    printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
-    $sessionsClient->close();
-//    dd($queryInput);
-});
+//    //teste 2
+//    $test = array('credentials' => '../teste-jwyo-aed37d258822.json');
+//    //nova sessão
+//    $sessionsClient = new \Google\Cloud\Dialogflow\V2\SessionsClient($test);
+//    $session = $sessionsClient->sessionName($config['projectId'], '12345678');
+//    //criando texto input
+//    $textInput = new \Google\Cloud\Dialogflow\V2\TextInput();
+//    $textInput->setText('oi');
+//    $textInput->setLanguageCode('pt-BR');
+//    //criando query input
+//    $queryInput = new \Google\Cloud\Dialogflow\V2\QueryInput();
+//    $queryInput->setText($textInput);
+//    // get response and relevant info
+//    $response = $sessionsClient->detectIntent($session, $queryInput);
+//    $queryResult = $response->getQueryResult();
+//    $queryText = $queryResult->getQueryText();
+//    $intent = $queryResult->getIntent();
+//    $displayName = $intent->getDisplayName();
+//    $confidence = $queryResult->getIntentDetectionConfidence();
+//    $fulfilmentText = $queryResult->getFulfillmentText();
+//     // output relevant info
+//    print(str_repeat("=", 20) . PHP_EOL);
+//    printf('Query text: %s' . PHP_EOL, $queryText);
+//    printf('Detected intent: %s (confidence: %f)' . PHP_EOL, $displayName, $confidence);
+//    print(PHP_EOL);
+//    printf('Fulfilment text: %s' . PHP_EOL, $fulfilmentText);
+//    $sessionsClient->close();
+////    dd($queryInput);
+//});
 
 Route::get('/teste1', [\App\Http\Controllers\Admin\ConexaoApiGoogleController::class, 'screenMessage'])->name('mensagem.tela');
 Route::post('/teste1/enviar', [\App\Http\Controllers\Admin\ConexaoApiGoogleController::class, 'sendMessage'])->name('mensagem.enviar');
@@ -92,7 +92,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 });
 
 /** Teste */
-Route::post('/request', [ConnectionAutoresponderController::class, 'connect'])->name('test.connect');
+//Route::post('/request', [ConnectionAutoresponderController::class, 'connect'])->name('test.connect')->middleware(['auth:sanctum']);
 
 /** Mensagens do usuário */
 Route::prefix('/mensagens')->name('mensagens.')->group(function () {
