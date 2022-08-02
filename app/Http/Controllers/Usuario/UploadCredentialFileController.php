@@ -16,10 +16,10 @@ class UploadCredentialFileController extends Controller
     {
         $upload = new UploadCredentialFile();
 
-        if (Auth::check())
+        if ( (Auth::check()) && (Auth::user()->credentials_file != NULL) )
             $file_uploaded = json_decode( $upload->findFile(Auth::user()->credentials_file) );
 
-        if ($file_uploaded != NULL || isset($file_uploaded) )
+        if ( isset($file_uploaded) )
             return view('profile.submit-credentials-file-form')->with('file_uploaded', $file_uploaded);
         else
             return view('profile.submit-credentials-file-form');
@@ -40,22 +40,24 @@ class UploadCredentialFileController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Busca e exibe os dados do arquivo credencial do Google de acordo com o usuário e nome de arquivo passados por parâmetro.
+     *
+     * @param $usuario
+     * @param $nome
+     */
     public function findFile($usuario, $nome)
     {
         if (Auth::check()) {
             $upload = new UploadCredentialFile();
             $file_uploaded = json_decode( $upload->findFile(Auth::user()->credentials_file) );
-//            return $file_uploaded;
-            return "Olá";
+            return $file_uploaded;
         } else {
             $upload = new UploadCredentialFile();
             $caminho = $usuario . '/' . $nome;
-//            dd($caminho);
-//            $file_uploaded = json_decode( $upload->findFile('murillo_silva_dos_santos/20220628_182818_62bb7272d8277_murillo_silva_dos_santos.json') );
             $file_uploaded = json_decode( $upload->findFile($caminho) );
             return $file_uploaded;
         }
-
     }
 
 }

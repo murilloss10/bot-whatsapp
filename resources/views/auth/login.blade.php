@@ -1,7 +1,10 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <div style="height: 94px; width: 200px;
+                    background-image: url('https://agenciafado.com.br/wp-content/uploads/elementor/thumbs/logo-agencia-vertical-fado-p9kxobh5p2lqxe57qksjr4428dbhzicl8h462u1r58.png');
+                    background-repeat: no-repeat">
+            </div>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -33,11 +36,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
+{{--                @if (Route::has('password.request'))--}}
+{{--                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">--}}
+{{--                        {{ __('Forgot your password?') }}--}}
+{{--                    </a>--}}
+{{--                @endif--}}
 
                 <x-jet-button class="ml-4">
                     {{ __('Log in') }}

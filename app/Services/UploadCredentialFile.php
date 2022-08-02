@@ -29,8 +29,9 @@ class UploadCredentialFile
     {
         if (Auth::check()){
             $this->nameClientFormatted = strtolower( str_replace(' ', '_', Auth::user()->name) );
+        } else {
+            $this->nameClientFormatted = 'nome_padrao';
         }
-        $this->nameClientFormatted = 'nome_padrao';
     }
 
     /**

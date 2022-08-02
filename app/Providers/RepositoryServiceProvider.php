@@ -25,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(\App\Repositories\MessagesRepository::class, \App\Repositories\MessagesRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SaveMessageRepository::class, \App\Repositories\SaveMessageRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\SaveSessionRepository::class, \App\Repositories\SaveSessionRepositoryEloquent::class);
         //:end-bindings:
     }
 }

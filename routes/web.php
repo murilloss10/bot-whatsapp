@@ -81,7 +81,7 @@ Route::prefix('projeto/{projeto}/intent/')->controller(\App\Http\Controllers\Adm
  */
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     /** Página Inicial */
-    Route::get('/home', [PaginaInicialController::class, 'home'])->name('dashboard');
+    Route::get('/', [PaginaInicialController::class, 'home'])->name('dashboard');
 
     /** Configurações de usuário */
     Route::prefix('/conta')->name('conta.')->group(function () {
@@ -91,11 +91,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 });
 
-/** Teste */
-//Route::post('/request', [ConnectionAutoresponderController::class, 'connect'])->name('test.connect')->middleware(['auth:sanctum']);
-
 /** Mensagens do usuário */
 Route::prefix('/mensagens')->name('mensagens.')->group(function () {
-//    Route::get('todas', [MessageHistoryRepository::class, 'index'])->name('todas');
     Route::post('salvar', [MessageHistoriesController::class, 'store'])->name('salvar');
 });

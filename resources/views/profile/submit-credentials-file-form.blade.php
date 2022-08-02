@@ -1,6 +1,6 @@
 @extends('layouts.app-new')
 
-@section('title', 'Autoresponder')
+@section('title', 'Carregar Credencial')
 
 @section('content')
 
