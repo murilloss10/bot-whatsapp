@@ -16,6 +16,27 @@
                         {{ __('Página Inicial') }}
                     </x-jet-nav-link>
                 </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('gerenciar.usuarios.listar') }}" :active="request()->routeIs('gerenciar.usuarios.listar')">
+                            {{ __('Gerenciar Usuários') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('gerenciar.tokens.listar') }}" :active="request()->routeIs('gerenciar.tokens.listar')">
+                            {{ __('Gerenciar Tokens') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('gerenciar.tokens.listar.id') }}" :active="request()->routeIs('gerenciar.tokens.listar.id')">
+                        {{ __('Meus Tokens') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('conta.horario-de-atendimento') }}" :active="request()->routeIs('conta.horario-de-atendimento')">
+                        {{ __('Horários') }}
+                    </x-jet-nav-link>
+                </div>
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -139,14 +160,35 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-1 pb-2 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Página Inicial') }}
             </x-jet-responsive-nav-link>
         </div>
+        @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+            <div class="pt-1 pb-2 space-y-1">
+                <x-jet-responsive-nav-link href="{{ route('gerenciar.usuarios.listar') }}" :active="request()->routeIs('gerenciar.usuarios.listar')">
+                    {{ __('Gerenciar Usuários') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('gerenciar.tokens.listar') }}" :active="request()->routeIs('gerenciar.tokens.listar')">
+                    {{ __('Gerenciar Tokens') }}
+                </x-jet-responsive-nav-link>
+            </div>
+        @endif
+        <div class="pt-1 pb-2 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('gerenciar.tokens.listar.id') }}" :active="request()->routeIs('gerenciar.tokens.listar.id')">
+                {{ __('Meus Tokens') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-1 pb-2 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('conta.horario-de-atendimento') }}" :active="request()->routeIs('conta.horario-de-atendimento')">
+                {{ __('Horários') }}
+            </x-jet-responsive-nav-link>
+        </div>
+
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-4 border-t border-gray-200">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
@@ -154,13 +196,13 @@
                     </div>
                 @endif
 
-                <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                </div>
+{{--                <div>--}}
+{{--                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>--}}
+{{--                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>--}}
+{{--                </div>--}}
             </div>
 
-            <div class="mt-3 space-y-1">
+            <div class="space-y-1">
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Conta') }}

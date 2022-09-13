@@ -28,7 +28,7 @@ class AuthController extends Controller
             'password'  => bcrypt($request->password)
         ]);
 
-        $token = $user->createToken('primeiroToken')->plainTextToken;
+        $token = $user->createToken('tokenId' . $user->id)->plainTextToken;
 
         $response = [
             'user'      => $user,
@@ -54,11 +54,11 @@ class AuthController extends Controller
 
         if ( !$user || !Hash::check($request->password, $user->password) ){
             return response([
-                'message' => 'Email or password is incorrect.'
+                'message' => 'Email ou senha estão incorretos.'
             ], 401);
         }
 
-        $token = $user->createToken('primeiroToken')->plainTextToken;
+        $token = $user->createToken('tokenId' . $user->id)->plainTextToken;
 
         $response = [
             'user'      => $user,

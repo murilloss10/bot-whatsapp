@@ -9,15 +9,26 @@
 
 namespace App\Services;
 
+use DateTimeZone;
+use DateTime;
 use stdClass;
+use App\Services\TimeSettingsService;
 
 class AutoresponderService
 {
     /**
-     * Contrutor.
+     * @var TimeSettingsService
      */
-    public function __construct()
+    protected $timeSettingsService;
+
+    /**
+     * Contrutor.
+     *
+     * @param TimeSettingsService $timeSettingsService
+     */
+    public function __construct(TimeSettingsService $timeSettingsService)
     {
+        $this->timeSettingsService  = $timeSettingsService;
     }
 
     /**
@@ -80,6 +91,74 @@ class AutoresponderService
             'ruleId'                => $ruleId,
             'isTestMessage'         => $isTestMessage,
         );
+    }
+
+    /**
+     * @param $user_id
+     * @param $day_name
+     * @param $current_time
+     * @return array
+     */
+    public function checkDaysAndTime($user_id, $day_name, $current_time)
+    {
+        $day_week   = $this->getDayOfTheWeek($day_name);
+        $check      = $this->timeSettingsService->checkIfTheDateIsCorrect($user_id, $day_week, $current_time);
+
+        return $check;
+    }
+
+    /**
+     * Altera o dia da semana de inglês para português.
+     *
+     * @param $date
+     * @return string
+     */
+    public function getDayOfTheWeek($date)
+    {
+        if ($date == 'Sunday'){
+            $day = 'Domingo';
+        } elseif ($date == 'Monday'){
+            $day = 'Segunda-Feira';
+        } elseif ($date == 'Tuesday'){
+            $day = 'Terça-Feira';
+        } elseif ($date == 'Wednesday'){
+            $day = 'Quarta-Feira';
+        } elseif ($date == 'Thursday'){
+            $day = 'Quinta-Feira';
+        } elseif ($date == 'Friday'){
+            $day = 'Sexta-Feira';
+        } elseif ($date == 'Saturday'){
+            $day = 'Sábado';
+        }
+
+        return $day;
+    }
+
+    /**
+     * Altera o dia da semana de inglês para número.
+     *
+     * @param $date
+     * @return string
+     */
+    public function getDayOfTheWeekForNumber($date)
+    {
+        if ($date == 'Sunday'){
+            $day = 1;
+        } elseif ($date == 'Monday'){
+            $day = 2;
+        } elseif ($date == 'Tuesday'){
+            $day = 3;
+        } elseif ($date == 'Wednesday'){
+            $day = 4;
+        } elseif ($date == 'Thursday'){
+            $day = 5;
+        } elseif ($date == 'Friday'){
+            $day = 6;
+        } elseif ($date == 'Saturday'){
+            $day = 7;
+        }
+
+        return $day;
     }
 
 }

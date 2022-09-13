@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Route;
 /**
  * ROTAS SEM AUTENTICAÇÃO
  */
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register'])->name('registrar.api');
+Route::post('/login', [AuthController::class, 'login'])->name('login.api');
 
 /**
  * ROTAS COM AUTENTICAÇÃO

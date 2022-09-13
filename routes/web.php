@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\ConnectionAutoresponderController;
+use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\MessageHistoriesController;
 use App\Http\Controllers\PaginaInicialController;
+use App\Http\Controllers\TokensController;
+use App\Http\Controllers\Usuario\TimeSettingsController;
 use App\Http\Controllers\Usuario\UploadCredentialFileController;
 use App\Repositories\MessageHistoryRepository;
 use Google\Cloud\Dialogflow\V2\IntentsClient;
@@ -85,8 +88,28 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     /** Configurações de usuário */
     Route::prefix('/conta')->name('conta.')->group(function () {
-        Route::get('credencial', [UploadCredentialFileController::class, 'index'])->name('credencial');
-        Route::post('credencial/salvar', [UploadCredentialFileController::class, 'store'])->name('credencial.salvar');
+        Route::get('/credencial', [UploadCredentialFileController::class, 'index'])->name('credencial');
+        Route::post('/credencial/salvar', [UploadCredentialFileController::class, 'store'])->name('credencial.salvar');
+        Route::get('/horario-de-atendimento', [TimeSettingsController::class, 'index'])->name('horario-de-atendimento');
+        Route::post('/horario-de-atendimento/salvar', [TimeSettingsController::class, 'store'])->name('horario-de-atendimento.salvar');
+        Route::get('/horario-de-atendimento/deletar/{id}', [TimeSettingsController::class, 'delete_day'])->name('horario-de-atendimento.remover');
+    });
+
+    /** Gerenciar usuários */
+    Route::prefix('/gerenciar/usuarios')->name('gerenciar.usuarios.')->group(function (){
+        Route::get('/', [ManageUsersController::class, 'index'])->name('listar');
+        Route::get('/{id}/resetar-senha', [ManageUsersController::class, 'reset_pass'])->name('resetar-senha');
+        Route::post('/{id}/editar', [ManageUsersController::class, 'edit_user'])->name('editar');
+        Route::get('/{id}/ativar', [ManageUsersController::class, 'activate_user'])->name('ativar');
+        Route::get('/{id}/desativar', [ManageUsersController::class, 'disable_user'])->name('desativar');
+    });
+
+    /** Gerenciar tokens */
+    Route::prefix('/gerenciar/tokens')->name('gerenciar.tokens.')->group(function (){
+        Route::get('/', [TokensController::class, 'list_tokens'])->name('listar');
+        Route::get('/todos', [TokensController::class, 'list_tokens_for_user'])->name('listar.id');
+        Route::get('/remover/{id}/{user_id}', [TokensController::class, 'remove_token'])->name('remover');
+        Route::post('/criar', [TokensController::class, 'new_token'])->name('criar');
     });
 
 });
@@ -95,3 +118,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 Route::prefix('/mensagens')->name('mensagens.')->group(function () {
     Route::post('salvar', [MessageHistoriesController::class, 'store'])->name('salvar');
 });
+
+Route::post('configuracoes/horario-funcionamento/salvar', [\App\Services\TimeSettingsService::class, 'save']);
